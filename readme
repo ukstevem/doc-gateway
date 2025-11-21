@@ -1,0 +1,29 @@
+## Document Gateway & URL Contract
+
+This project uses a single HTTP “document gateway” (an Nginx container) to expose files stored on the company file server over HTTP. All tools (doc-control pipelines, purchase order system, etc.) must follow this URL contract.
+
+### 1. Storage root
+
+All files are stored under a single root folder called **`cad_iot`**.
+
+- **Production (Raspberry Pi)**
+  - Network share: `\\Pss-dc02\cad_iot`
+  - Mounted on the Pi at: `/mnt/cad_iot`
+  - Docker bind mount:
+    - Host: `/mnt/cad_iot`
+    - Container: `/data/cad_root`
+
+- **Development (Windows)**
+  - Local folder: `C:\Dev\doc-control\cad_iot`
+  - Docker bind mount:
+    - Host: `C:\Dev\doc-control\cad_iot`
+    - Container: `/data/cad_root`
+
+In both cases, the container only ever sees `/data/cad_root`. The host-specific path is provided via the `HOST_DOC_ROOT` environment variable in `.env`.
+
+```env
+# .env (Windows dev)
+HOST_DOC_ROOT=C:\Dev\doc-control\cad_iot
+
+# .env (Raspberry Pi)
+HOST_DOC_ROOT=/mnt/cad_iot

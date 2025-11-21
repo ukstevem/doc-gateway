@@ -1,0 +1,10 @@
+# Environment-specific settings
+.env
+
+# Nginx logs
+nginx/logs/
+
+# OS noise
+*.log
+.DS_Store
+Thumbs.db

@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  doc_gateway:
+    image: nginx:1.27-alpine
+    container_name: doc_gateway
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+
+      # Root of cad_iot share -> visible in container as /data/cad_root
+      - ${HOST_DOC_ROOT}:/data/cad_root:ro
+
+      - ./nginx/logs:/var/log/nginx
