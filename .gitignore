@@ -8,3 +8,4 @@ nginx/logs/
 *.log
 .DS_Store
 Thumbs.db
+docker-compose.override.yml
